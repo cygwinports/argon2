@@ -1,0 +1,33 @@
+NAME="argon2"
+VERSION=20171227
+RELEASE=1
+CATEGORY="Libs"
+SUMMARY="Password-hashing function library"
+DESCRIPTION="This is the reference C implementation of Argon2, a password-
+hashing function that summarizes the state of the art in the design of
+memory-hard functions and can be used to hash passwords for credential
+storage, key derivation, or other applications."
+HOMEPAGE="https://github.com/P-H-C/phc-winner-argon2"
+SRC_URI="https://github.com/P-H-C/phc-winner-argon2/archive/${VERSION}/phc-winner-argon2-${VERSION}.tar.gz"
+SRC_DIR="phc-winner-argon2-${VERSION}"
+PATCH_URI="20171227-cygwin-dll.patch"
+
+PKG_NAMES="argon2 libargon2_1 libargon2-devel"
+argon2_CATEGORY="Utils"
+argon2_SUMMARY=${SUMMARY/library/tool}
+argon2_CONTENTS="usr/bin/argon2.exe usr/share/doc/"
+libargon2_1_CONTENTS="usr/bin/cygargon2-1.dll"
+libargon2_devel_CONTENTS="usr/include/argon2.h usr/lib/libargon2.dll.a"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	cygmake
+}
+
+src_install() {
+	cd ${B}
+	dobin argon2.exe cygargon2-1.dll
+	doinclude include/argon2.h
+	dolib libargon2.dll.a
+}
