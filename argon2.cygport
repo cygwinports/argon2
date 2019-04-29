@@ -22,7 +22,7 @@ libargon2_devel_CONTENTS="usr/include/argon2.h usr/lib/libargon2.dll.a"
 src_compile() {
 	lndirs
 	cd ${B}
-	cygmake
+	cygmake OPTTARGET=${ARCH_i686+i686}${ARCH_x86_64+generic}
 }
 
 src_install() {
